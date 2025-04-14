@@ -20,3 +20,4 @@ dist/
 
 # Others
 package-lock.json
+*.db
