@@ -1,0 +1,22 @@
+# Backend (Express.js)  
+node_modules/  
+.env  
+npm-debug.log  
+
+# Frontend (React/Vite)  
+dist/  
+.temp/  
+.cache/  
+
+# Database  
+*.db  
+*.sqlite  
+*.db-journal  
+
+# IDE/System 
+.DS_Store  
+.idea/  
+.vscode/  
+
+# Others
+package-lock.json
