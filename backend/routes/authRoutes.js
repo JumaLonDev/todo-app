@@ -15,5 +15,15 @@ export default function authRoutes(userModel) {
     }
   });
 
+  router.post("/login", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      const result = await authController.login(email, password);
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(401).json({ error: error.message }); // 401 = Unauthorized
+    }
+  });
+
   return router;
 }
