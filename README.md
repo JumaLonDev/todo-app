@@ -1,4 +1,3 @@
-# todo-app
 # TodoApp Fullstack  
 🚀 **Tecnologías**:  
 - Backend: Node.js + Express + JWT  
