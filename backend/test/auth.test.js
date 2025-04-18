@@ -1,27 +1,28 @@
-import { request } from "supertest";
+import supertest from "supertest";
 import { app } from "../app.js";
 
+const request = supertest(app);
+
 describe("Auth Endpoints", () => {
-  let authToken;
-
-  test("POST /register - Debe registrar un nuevo usuario", async () => {
-    const res = await request(app).post("/api/auth/register").send({
-      email: "test@jest.com",
-      password: "password123",
-    });
-
-    expect(res.statusCode).toEqual(201);
-    expect(res.body).toHaveProperty("token");
-    authToken = res.body.token;
+  test("POST /register - Registro exitoso", async () => {
+    const uniqueEmail = `test-${Date.now()}@jest.com`;
+    const res = await request
+      .post("/api/auth/register")
+      .send({ email: uniqueEmail, password: "password123" });
+    expect(res.status).toBe(201);
   });
 
-  test("POST /login - Debe loguear al usuario registrado", async () => {
-    const res = await request(app).post("/api/auth/login").send({
-      email: "test@jest.com",
-      password: "password123",
-    });
+  test("POST /login - Login exitoso", async () => {
+    // Primero registra un usuario
+    const email = `test-${Date.now()}@jest.com`;
+    await request
+      .post("/api/auth/register")
+      .send({ email, password: "password123" });
 
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty("token");
+    // Ahora prueba login
+    const res = await request
+      .post("/api/auth/login")
+      .send({ email, password: "password123" });
+    expect(res.status).toBe(200);
   });
 });

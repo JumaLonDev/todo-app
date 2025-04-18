@@ -7,9 +7,23 @@ export default class AuthController {
   }
 
   async register(email, password) {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const userId = await this.userModel.create(email, hashedPassword);
-    return { id: userId, token: generateToken(userId) };
+    try {
+      // verify if user exists
+      const userExits = await this.userModel.findByEmail(email);
+      if (userExits) throw new Error("User already exists");
+
+      // hash password
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // create user
+      const userId = await this.userModel.create(email, hashedPassword);
+
+      // generate token
+      return { id: userId, token: generateToken(userId) };
+    } catch (error) {
+      console.error("Error on register:", error);
+      throw error;
+    }
   }
 
   async login(email, password) {

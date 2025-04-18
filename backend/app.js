@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import express from "express";
 import { initDB } from "./config/db.config.js";
 import User from "./models/User.js";
@@ -6,10 +7,12 @@ import authRoutes from "./routes/authRoutes.js";
 import todoRoutes from "./routes/todoRoutes.js";
 
 const app = express();
+globalThis.__APP__ = app;
 app.use(express.json());
 
 // Inicialize database and Models
 const db = await initDB();
+app.locals.db = db;
 const userModel = new User(db);
 const todoModel = new Todo(db);
 
