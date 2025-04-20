@@ -3,10 +3,10 @@ export default class Todo {
     this.db = db;
   }
 
-  async create(userId, title, task) {
+  async create(userId, title, task, completed = false) {
     const result = await this.db.run(
-      `INSERT INTO todos (title, task, user_id) VALUES (?, ?, ?)`,
-      [title, task, userId]
+      `INSERT INTO todos (title, task,completed, user_id) VALUES (?, ?, ?, ?)`,
+      [title, task, completed, userId]
     );
     return result.lastID; // return the new todo id
   }

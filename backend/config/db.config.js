@@ -6,7 +6,8 @@ import { fileURLToPath } from "url";
 // Obtiene la ruta del directorio actual (ESM)
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export async function initDB() {
-  const dbPath = process.env.DB_PATH || ":memory:";
+  const dbPath =
+    process.env.NODE_ENV === "test" ? ":memory:" : process.env.DB_PATH;
   const db = await open({
     filename: dbPath,
     driver: sqlite3.Database,
