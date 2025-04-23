@@ -1,8 +1,14 @@
+import { Routes, Route } from "react-router-dom"
+import LoginPage from "./pages/LoginPage"
+import DashboardPage from "./pages/DashboardPage"
+
+
 function App() {
   return (
-    <div className='p-8 max-w-2xl mx-auto'>
-      <h1 className='text-3xl font-bold'>Todo App</h1>
-    </div>
+    <Routes>
+      <Route path="/" element={<LoginPage />} />
+      <Route path="/dashboard" element={<DashboardPage />} />
+    </Routes>
   )
 }
 
